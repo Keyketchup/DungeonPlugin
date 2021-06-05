@@ -28,6 +28,7 @@ public class LootTable {
 	public LootTable() {
 		
 		AddLoot("Grenade", Material.SPECTRAL_ARROW, 1);
+		AddLoot("Levitate", Material.GLASS_BOTTLE, 1);
 		
 	}
 	
@@ -57,7 +58,7 @@ public class LootTable {
 		ItemMeta meta = res.getItemMeta();
 		meta.setDisplayName(loot.name);
 		meta.setUnbreakable(true);
-		meta.addEnchant(Enchantment.ARROW_INFINITE, 0, true);
+		meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 		res.setItemMeta(meta);
 		
 		return res;

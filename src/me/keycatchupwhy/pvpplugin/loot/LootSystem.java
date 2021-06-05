@@ -8,6 +8,7 @@ public class LootSystem {
 	
 	public static Material[] allowedBlocks = {
 			Material.CHEST,
+			Material.COBWEB,
 			Material.GLASS
 	};
 	
