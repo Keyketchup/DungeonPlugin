@@ -45,4 +45,18 @@ public class ItemSystem {
 		}
 	}
 	
+	public void PoisenBomb(Player player) {
+		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+		
+		List<Entity> nearbyMobs = player.getNearbyEntities(4, 4, 4);
+		player.getWorld().createExplosion(player.getLocation(), 0f);
+		for(int i=0; i<nearbyMobs.size(); i++) {
+			Entity tmp = nearbyMobs.get(i);
+			if(tmp instanceof LivingEntity) {
+				LivingEntity entity = (LivingEntity)tmp;
+				entity.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*4, 0));
+			}
+		}
+	}
+	
 }

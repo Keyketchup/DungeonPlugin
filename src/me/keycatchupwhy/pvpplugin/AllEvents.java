@@ -49,8 +49,11 @@ public class AllEvents implements Listener {
 				if(ev.getMaterial() == Material.SPECTRAL_ARROW) {
 					itemSystem.ExplosiveBomb(player);
 		    	}
-				if(ev.getMaterial() == Material.GLASS_BOTTLE) {
+				else if(ev.getMaterial() == Material.GRAY_DYE) {
 					itemSystem.LevitationBomb(player);
+				}
+				else if(ev.getMaterial() == Material.GREEN_DYE) {
+					itemSystem.PoisenBomb(player);
 				}
 			}
 		}

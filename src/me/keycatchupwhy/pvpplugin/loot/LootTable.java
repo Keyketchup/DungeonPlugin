@@ -27,8 +27,9 @@ public class LootTable {
 	
 	public LootTable() {
 		
-		AddLoot("Grenade", Material.SPECTRAL_ARROW, 1);
-		AddLoot("Levitate", Material.GLASS_BOTTLE, 1);
+		AddLoot("수류탄", Material.SPECTRAL_ARROW, 1);
+		AddLoot("공중부양", Material.GRAY_DYE, 1);
+		AddLoot("독", Material.GREEN_DYE, 1);
 		
 	}
 	
