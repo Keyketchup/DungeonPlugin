@@ -27,9 +27,10 @@ public class LootTable {
 	
 	public LootTable() {
 		
-		AddLoot("¼ö·ùÅº", Material.SPECTRAL_ARROW, 1);
-		AddLoot("°øÁßºÎ¾ç", Material.GRAY_DYE, 1);
-		AddLoot("µ¶", Material.GREEN_DYE, 1);
+		AddLoot("¼ö·ùÅº", Material.WHITE_DYE, 1);
+		AddLoot("°øÁßºÎ¾ç ÆøÅº", Material.GRAY_DYE, 1);
+		AddLoot("µ¶ ¼ö·ùÅº", Material.GREEN_DYE, 1);
+		AddLoot("¿¬¸·Åº", Material.INK_SAC, 1);
 		
 	}
 	

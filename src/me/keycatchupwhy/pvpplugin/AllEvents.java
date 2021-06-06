@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -45,15 +46,40 @@ public class AllEvents implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent ev) {
 		Player player = ev.getPlayer();
 		if(ev.getAction() == Action.RIGHT_CLICK_AIR || ev.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if(ev.getItem().getItemMeta().hasEnchant(Enchantment.ARROW_INFINITE)) {
-				if(ev.getMaterial() == Material.SPECTRAL_ARROW) {
-					itemSystem.ExplosiveBomb(player);
-		    	}
-				else if(ev.getMaterial() == Material.GRAY_DYE) {
-					itemSystem.LevitationBomb(player);
+			if(ev.getItem() != null) {
+				if(ev.getItem().getItemMeta().hasEnchant(Enchantment.ARROW_INFINITE)) {
+					if(ev.getMaterial() == Material.WHITE_DYE) {
+						itemSystem.ExplosiveBomb(player);
+			    	}
+					else if(ev.getMaterial() == Material.GRAY_DYE) {
+						itemSystem.LevitationBomb(player);
+					}
+					else if(ev.getMaterial() == Material.GREEN_DYE) {
+						itemSystem.PoisenBomb(player);
+					}
+					else if(ev.getMaterial() == Material.INK_SAC) {
+						itemSystem.BlindnessBomb(player);
+					}
 				}
-				else if(ev.getMaterial() == Material.GREEN_DYE) {
-					itemSystem.PoisenBomb(player);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onEntityPickupItem(EntityPickupItemEvent ev) {
+		if(ev.getItem() != null) {
+			if(!ev.getItem().getItemStack().getItemMeta().hasEnchant(Enchantment.ARROW_INFINITE)) {
+				if(ev.getItem().getItemStack().getType() == Material.INK_SAC) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.WHITE_DYE) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.GREEN_DYE) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.GRAY_DYE) {
+					ev.setCancelled(true);
 				}
 			}
 		}
@@ -66,6 +92,8 @@ public class AllEvents implements Listener {
 				zombieKills.kills++;
 				if(zombieKills.kills >= 10) {
 					ev.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.LEVER, 1));
+					zombieKills.kills = 0;
+					ev.getEntity().getKiller().sendMessage("10 Zombie Kills? Awsome!");
 				}
 			}
 		}
