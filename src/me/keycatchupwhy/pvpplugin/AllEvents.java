@@ -60,6 +60,15 @@ public class AllEvents implements Listener {
 					else if(ev.getMaterial() == Material.INK_SAC) {
 						itemSystem.BlindnessBomb(player);
 					}
+					else if(ev.getMaterial() == Material.PURPLE_DYE) {
+						itemSystem.AdvancedGrenade(player);
+					}
+					else if(ev.getMaterial() == Material.RED_DYE) {
+						itemSystem.FlameGrenade(player);
+					}
+					else if(ev.getMaterial() == Material.LIME_DYE) {
+						itemSystem.FastGrenade(player);
+					}
 				}
 			}
 		}
@@ -79,6 +88,15 @@ public class AllEvents implements Listener {
 					ev.setCancelled(true);
 				}
 				else if(ev.getItem().getItemStack().getType() == Material.GRAY_DYE) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.RED_DYE) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.PURPLE_DYE) {
+					ev.setCancelled(true);
+				}
+				else if(ev.getItem().getItemStack().getType() == Material.LIME_DYE) {
 					ev.setCancelled(true);
 				}
 			}

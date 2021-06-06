@@ -28,9 +28,12 @@ public class LootTable {
 	public LootTable() {
 		
 		AddLoot("수류탄", Material.WHITE_DYE, 1);
-		AddLoot("공중부양 폭탄", Material.GRAY_DYE, 1);
-		AddLoot("독 수류탄", Material.GREEN_DYE, 1);
+		AddLoot("무중력 수류탄", Material.GRAY_DYE, 1);
+		AddLoot("가스 수류탄", Material.GREEN_DYE, 1);
 		AddLoot("연막탄", Material.INK_SAC, 1);
+		AddLoot("화염 수류탄", Material.RED_DYE, 1);
+		AddLoot("고급 수류탄", Material.PURPLE_DYE, 1);
+		AddLoot("미니 수류탄", Material.LIME_DYE, 1);
 		
 	}
 	
