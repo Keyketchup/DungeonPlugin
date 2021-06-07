@@ -137,12 +137,34 @@ public class ItemSystem {
 		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
 		
 		final Item grenade = player.getWorld().dropItem(player.getEyeLocation(), new ItemStack(Material.LIME_DYE));
-        grenade.setVelocity(player.getLocation().getDirection().multiply(0.8D));
+        grenade.setVelocity(player.getLocation().getDirection().multiply(0.9D));
     
          Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
              @Override
              public void run() {
                  grenade.getWorld().createExplosion(grenade.getLocation(), 3.2f, false, false);
+             }
+         }, 10*3);
+	}
+	
+	public void StunGrenade(Player player) {
+		player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+		
+		final Item grenade = player.getWorld().dropItem(player.getEyeLocation(), new ItemStack(Material.YELLOW_DYE));
+        grenade.setVelocity(player.getLocation().getDirection().multiply(0.8D));
+    
+         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+             @Override
+             public void run() {
+                 grenade.getWorld().createExplosion(grenade.getLocation(), 2f, false, false);
+                 List<Entity> nearbyMobs = grenade.getNearbyEntities(3, 3, 3);
+         		 for(int i=0; i<nearbyMobs.size(); i++) {
+         			Entity tmp = nearbyMobs.get(i);
+         			if(tmp instanceof LivingEntity) {
+         				LivingEntity entity = (LivingEntity)tmp;
+         				entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*4, 200));
+         			}
+         		 }
              }
          }, 10*3);
 	}

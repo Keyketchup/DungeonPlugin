@@ -3,7 +3,6 @@ package me.keycatchupwhy.pvpplugin;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +22,7 @@ public class AllEvents implements Listener {
 	
 	public static ItemSystem itemSystem = new ItemSystem();
 	public static LootTable lootTable = new LootTable();
-	public static ZombieKills zombieKills = new ZombieKills(0);
+	public static ZombieKills mobKills = new ZombieKills(null, 0);
 	
 	@EventHandler
 	public static void onBlockBreak(BlockBreakEvent ev) {
@@ -69,6 +68,9 @@ public class AllEvents implements Listener {
 					else if(ev.getMaterial() == Material.LIME_DYE) {
 						itemSystem.FastGrenade(player);
 					}
+					else if(ev.getMaterial() == Material.YELLOW_DYE) {
+						itemSystem.StunGrenade(player);
+					}
 				}
 			}
 		}
@@ -78,25 +80,7 @@ public class AllEvents implements Listener {
 	public void onEntityPickupItem(EntityPickupItemEvent ev) {
 		if(ev.getItem() != null) {
 			if(!ev.getItem().getItemStack().getItemMeta().hasEnchant(Enchantment.ARROW_INFINITE)) {
-				if(ev.getItem().getItemStack().getType() == Material.INK_SAC) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.WHITE_DYE) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.GREEN_DYE) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.GRAY_DYE) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.RED_DYE) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.PURPLE_DYE) {
-					ev.setCancelled(true);
-				}
-				else if(ev.getItem().getItemStack().getType() == Material.LIME_DYE) {
+				if(lootTable.nonCollectableLoot.contains(ev.getItem().getItemStack().getType())) {
 					ev.setCancelled(true);
 				}
 			}
@@ -105,16 +89,21 @@ public class AllEvents implements Listener {
 	
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent ev) {
-		if(ev.getEntityType() == EntityType.ZOMBIE) {
-			if(ev.getEntity().getKiller() != null) {
-				zombieKills.kills++;
-				if(zombieKills.kills >= 10) {
-					ev.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.LEVER, 1));
-					zombieKills.kills = 0;
-					ev.getEntity().getKiller().sendMessage("10 Zombie Kills? Awsome!");
+		if(mobKills.entityType != null) {
+			if(ev.getEntityType() == mobKills.entityType) {
+				if(ev.getEntity().getKiller() != null) {
+					mobKills.kills++;
+					if(mobKills.kills >= mobKills.targetKills) {
+						ev.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.LEVER, 1));
+						mobKills.kills = 0;
+						ev.getEntity().getKiller().sendMessage("You got a key by killing " + mobKills.targetKills + "" + mobKills.entityType.name().toLowerCase() + "s, Congraduations!");
+					} else {
+						ev.getEntity().getKiller().sendMessage((mobKills.entityType.name().toLowerCase() + " " + mobKills.kills + "/" + mobKills.targetKills));
+					}
 				}
 			}
 		}
+		
 	}
 	
 }

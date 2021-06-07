@@ -12,6 +12,7 @@ public class Main extends JavaPlugin implements Listener{
 	public void onEnable() {
 		instance = this;
 		Bukkit.getServer().getPluginManager().registerEvents(new AllEvents(), this);
+		this.getCommand("task").setExecutor(new TaskCommand());
 	}
 
 }

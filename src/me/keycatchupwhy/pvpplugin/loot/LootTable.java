@@ -34,13 +34,26 @@ public class LootTable {
 		AddLoot("È­¿° ¼ö·ùÅº", Material.RED_DYE, 1);
 		AddLoot("°í±Þ ¼ö·ùÅº", Material.PURPLE_DYE, 1);
 		AddLoot("¹Ì´Ï ¼ö·ùÅº", Material.LIME_DYE, 1);
+		AddLoot("¸¶ºñ ¼ö·ùÅº", Material.YELLOW_DYE, 1);
 		
 	}
 	
+	public ArrayList<Material> nonCollectableLoot = new ArrayList<Material>();
 	public ArrayList<Loot> lootTable = new ArrayList<Loot>();
 	
 	public void AddLoot(String name, Material itemMaterial, int amount) {
 		
+		nonCollectableLoot.add(itemMaterial);
+		Loot loot = new Loot(name, itemMaterial, amount);
+		lootTable.add(loot);
+		
+	}
+	
+	public void AddLoot(String name, Material itemMaterial, int amount, boolean isThrowable) {
+		
+		if(!isThrowable) {
+			nonCollectableLoot.add(itemMaterial);
+		}
 		Loot loot = new Loot(name, itemMaterial, amount);
 		lootTable.add(loot);
 		
@@ -72,7 +85,9 @@ public class LootTable {
 	
 	public void GiveLoot(Player player) {
 		
-		player.getInventory().addItem(GetRandomItemStack());
+		ItemStack itemstack = GetRandomItemStack();
+		player.getInventory().addItem(itemstack);
+		player.sendMessage("You found " + itemstack.getAmount() + " " + itemstack.getItemMeta().getDisplayName() + " from the loot box");
 		
 	}
 	

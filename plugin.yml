@@ -2,3 +2,7 @@ name: PvP_Plugin
 main: me.keycatchupwhy.pvpplugin.Main
 version: 1.0
 api-version: 1.16
+commands:
+   task:
+      description: Add a task for a player
+      usage: /<command>
